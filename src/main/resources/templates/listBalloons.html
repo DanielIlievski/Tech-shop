@@ -1,0 +1,71 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">CHOOSE YOUR BALLOON</h1>
+        </div>
+    </section>
+
+    <div class="container mb-5">
+        <div class="row">
+            <h3 style="background-color: aqua" th:if="${error!= null}" th:text="${error}"></h3>
+            <form method="GET" action="/balloons">
+                <input type="text" name="searchTerm"/>
+                <button type="submit">Search</button>
+                <br/>
+                <br/>
+            </form>
+
+            <form method="GET" action="/balloons">
+                <input type="text" name="searchByStatus"/>
+                <button type="submit">Search by Status</button>
+                <br/>
+                <br/>
+            </form>
+
+
+            <form method="GET" action="/balloons">
+                <button type="submit">Clear search</button>
+                <br/>
+                <br/>
+            </form>
+
+            <ul>
+                <li th:each="item : ${balloons}">
+                    <!--            <h3 th:text="${item.getDescription()}"></h3>-->
+                    <form method="get" action="/selectBalloon">
+                        <input name="color" th:value="${item.getName()}" hidden>
+                        <h4 th:text="${item.getName()}"></h4>
+                        <button type="submit">Order balloon</button>
+                    </form>
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <form method="post" th:action="@{/balloons/delete/{id}(id=${item.getId()})}">
+                            <button
+                                    style="background-color: red"
+                                    type="submit">
+                                x
+                            </button>
+                        </form>
+                    </th:block>
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+
+                        <form method="get" th:action="@{/balloons/edit/{id}(id=${item.getId()})}">
+                            <button type="submit" style="background-color: orange">Edit</button>
+                        </form>
+                    </th:block>
+                    <br/>
+                </li>
+            </ul>
+
+            <div class="col mb-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <a href="/balloons/add" class="btn btn-block btn-light">Add new product</a>
+                        <br/>
+                        <a href="/orders" class="btn btn-block btn-light">See the orders</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
