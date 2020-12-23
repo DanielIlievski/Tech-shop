@@ -33,21 +33,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<Order> listAllOrdersInShoppingCart(Long cartId) {
-        if (this.shoppingCartRepository.findById(cartId).isEmpty()) {
-            throw new NoItemsInCartException(cartId);
-        }
-        return this.shoppingCartRepository.findById(cartId).get().getOrders();
+        ShoppingCart shoppingCart = this.shoppingCartRepository.findById(cartId)
+                .orElseThrow(() -> new NoItemsInCartException(cartId));
+        return shoppingCart.getOrders();
     }
 
     @Override
     public ShoppingCart getActiveShoppingCart(String username) {
         User user = this.userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));
-        if (this.shoppingCartRepository.findAllByUserAndStatus(user, ShoppingCartStatus.CREATED).isEmpty()) {
-            ShoppingCart shoppingCart = new ShoppingCart(user);
-            return this.shoppingCartRepository.save(shoppingCart);
-        }
-        return this.shoppingCartRepository.findAllByUserAndStatus(user, ShoppingCartStatus.CREATED).get();
+
+        return this.shoppingCartRepository.findAllByUserAndStatus(user, ShoppingCartStatus.CREATED)
+                .orElseGet(() -> this.shoppingCartRepository.save(new ShoppingCart(user)));
     }
 
     @Override

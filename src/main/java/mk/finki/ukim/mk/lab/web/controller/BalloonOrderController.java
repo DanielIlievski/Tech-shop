@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.nio.file.attribute.UserPrincipal;
 
 @Controller
 @RequestMapping("/BalloonOrder")
@@ -33,10 +34,10 @@ public class BalloonOrderController {
     @PostMapping
     public String makeOrder(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
+
         String balloonColor = (String) session.getAttribute("color");
         String size = (String) session.getAttribute("size");
         String clientAddress = req.getParameter("clientAddress");
-        session.setAttribute("clientAddress", clientAddress);
         String username = req.getRemoteUser();
         session.setAttribute("username", username);
         User user = userService.findByUsername(username).orElse(new User(username, clientAddress));

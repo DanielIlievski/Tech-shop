@@ -36,7 +36,7 @@ public class ShoppingCart {
     @JoinTable(name = "cart_orders",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
     public ShoppingCart(User user) {
         this.dateCreated = LocalDateTime.now();

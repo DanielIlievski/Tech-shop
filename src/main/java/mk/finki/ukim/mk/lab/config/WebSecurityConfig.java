@@ -7,17 +7,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
+    private final CustomUsernameAndPasswordProvider customUsernameAndPasswordProvider;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public WebSecurityConfig(CustomUsernameAndPasswordProvider customUsernameAndPasswordProvider) {
+        this.customUsernameAndPasswordProvider = customUsernameAndPasswordProvider;
     }
 
 
@@ -44,20 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .and()
                 .exceptionHandling().accessDeniedPage("/access_denied");
-
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("anadavcheva")
-                .password(passwordEncoder.encode("ana"))
-                .authorities("ROLE_USER")
-                .and()
-                .withUser("admin")
-                .password(passwordEncoder.encode("admin"))
-                .authorities("ROLE_ADMIN");
+    protected void configure(AuthenticationManagerBuilder auth) {
+//        auth.inMemoryAuthentication()
+//                .withUser("anadavcheva")
+//                .password(passwordEncoder.encode("ana"))
+//                .authorities("ROLE_USER")
+//                .and()
+//                .withUser("admin")
+//                .password(passwordEncoder.encode("admin"))
+//                .authorities("ROLE_ADMIN");
+        auth.authenticationProvider(this.customUsernameAndPasswordProvider);
     }
-
 
 }

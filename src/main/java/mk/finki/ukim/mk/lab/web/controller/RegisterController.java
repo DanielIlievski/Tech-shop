@@ -39,10 +39,9 @@ public class RegisterController {
                                @RequestParam String repeatedPassword,
                                @RequestParam String name,
                                @RequestParam String surname,
-                               Model model,
                                HttpServletRequest request){
         try{
-            User user = (User)this.authenticationService.register(username, password,repeatedPassword, name, surname);
+            User user = this.authenticationService.register(username, password,repeatedPassword, name, surname);
             request.getSession().setAttribute("user", user);
             return "redirect:/login";
         } catch (UsernameAlreadyExistsException ex){

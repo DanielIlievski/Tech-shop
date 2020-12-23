@@ -41,8 +41,7 @@ public class ShoppingCartController {
     @PostMapping("/add-order/{id}")
     public String addProductToShoppingCart(@PathVariable Long id, HttpServletRequest req){
         try{
-            User user = (User) req.getSession().getAttribute("user");
-            ShoppingCart shoppingCart = this.shoppingCartService.addOrderToShoppingCart(user.getUsername(), id);
+            ShoppingCart shoppingCart = this.shoppingCartService.addOrderToShoppingCart(req.getRemoteUser(), id);
             return "redirect:/shopping-cart";
         } catch (RuntimeException ex){
             return "redirect:/shopping-cart?error=" + ex.getMessage();

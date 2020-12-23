@@ -64,7 +64,7 @@
 <section class="jumbotron text-center">
     <div class="container">
         <h3 class="jumbotron-heading">Shopping cart for
-            <th:block th:if="${session.user != null}" th:text="${session.user.getUsername()}"></th:block>
+            <th:block sec:authentication="name"/>
         </h3>
     </div>
 </section>
@@ -93,10 +93,10 @@
                     <tr th:each="order : ${orders}">
                         <td th:text="${order.getUser().getName()}"></td>
                         <td th:text="${order.getUser().getSurname()}"></td>
-                        <td th:text="${order.getUserAddress()}"></td>
-                        <td th:text="${order.getIpAddress()}"></td>
-                        <td th:text="${order.getBrowser()}"></td>
-                        <td th:text="${order.getBalloon().getName()}"></td>
+<!--                        <td th:text="${order.getUserAddress()}"></td>-->
+<!--                        <td th:text="${order.getIpAddress()}"></td>-->
+<!--                        <td th:text="${order.getBrowser()}"></td>-->
+<!--                        <td th:text="${order.getBalloon().getName()}"></td>-->
                         <td th:text="${order.getBalloonSize()}"></td>
                     </tr>
                     </tbody>
