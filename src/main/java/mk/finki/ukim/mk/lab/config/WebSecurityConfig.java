@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/assets/**", "/register/**", "/balloons/**").permitAll()
+                .antMatchers("/", "/home", "/assets/**", "/register/**", "/products/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .failureUrl("/login?error=BadCredentials")
-                .defaultSuccessUrl("/balloons", true)
+                .defaultSuccessUrl("/products", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -49,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
 //        auth.inMemoryAuthentication()
-//                .withUser("anadavcheva")
-//                .password(passwordEncoder.encode("ana"))
+//                .withUser("danielilievski")
+//                .password(passwordEncoder.encode("daniel"))
 //                .authorities("ROLE_USER")
 //                .and()
 //                .withUser("admin")

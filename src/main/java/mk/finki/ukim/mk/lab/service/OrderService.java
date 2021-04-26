@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
-    Order placeOrder(String balloonColor, String balloonSize, User user);
+    Order placeOrder(String productName, String payment, User user);
     Optional<Order> findById(Long id);
     List<Order> listAllOrders();
     List<Order> listOrdersByUsername(String username);
+    void deleteById(Long id);
 }

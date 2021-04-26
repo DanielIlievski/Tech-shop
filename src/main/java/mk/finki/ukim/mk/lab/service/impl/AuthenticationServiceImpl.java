@@ -53,5 +53,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void init() {
         User admin = new User("admin", passwordEncoder.encode("admin"), Role.ROLE_ADMIN, "admin", "admin");
         this.userRepository.save(admin);
+        User user = new User("daniel.ilievski", passwordEncoder.encode("di"), Role.ROLE_USER, "Daniel", "Ilievski");
+        this.userRepository.save(user);
     }
 }

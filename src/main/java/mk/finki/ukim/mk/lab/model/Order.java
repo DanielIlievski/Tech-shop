@@ -1,9 +1,6 @@
 package mk.finki.ukim.mk.lab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,8 +8,7 @@ import java.util.List;
 //2 baranje
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -21,12 +17,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    private String balloonColor;
+    private String productName;
 
-    private String balloonSize;
+    private String payment;
 
     @ManyToMany(mappedBy = "orders")
     private List<ShoppingCart> carts;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

@@ -27,4 +27,14 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         return this.repository.findById(id)
                 .orElseThrow(() -> new ManufacturerNotFoundException(id));
     }
+
+    @Override
+    public Manufacturer save(Manufacturer m) {
+        return repository.save(m);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.repository.deleteById(id);
+    }
 }

@@ -7,4 +7,6 @@ import java.util.List;
 public interface ManufacturerService {
     List<Manufacturer> findAll();
     Manufacturer findById(Long id);
+    Manufacturer save(Manufacturer m);
+    void deleteById(Long id);
 }

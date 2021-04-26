@@ -14,6 +14,7 @@ import mk.finki.ukim.mk.lab.service.OrderService;
 import mk.finki.ukim.mk.lab.service.ShoppingCartService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -50,7 +51,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart addOrderToShoppingCart(String username, Long orderId) {
         ShoppingCart cart = this.getActiveShoppingCart(username);
-        Order order = this.orderService.findById(orderId).orElseThrow(() -> new OrderDoesNotExistException(orderId));
+        Order order = this.orderService.findById(orderId)
+                .orElseThrow(() -> new OrderDoesNotExistException(orderId));
         if (cart.getOrders()
                 .stream()
                 .filter(o -> o.getOrderId().equals(orderId))
@@ -58,5 +60,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             throw new OrderAlreadyExistsException(orderId);
         cart.getOrders().add(order);
         return this.shoppingCartRepository.save(cart);
+    }
+
+    @Override
+    public void deleteOrderFromShoppingCart(String username, Long orderId) {
+        ShoppingCart cart = this.getActiveShoppingCart(username);
+        Order order = this.orderService.findById(orderId)
+                .orElseThrow(() -> new OrderDoesNotExistException(orderId));
+        cart.getOrders().remove(order);
+//        this.shoppingCartRepository.deleteByOrders(order);
     }
 }

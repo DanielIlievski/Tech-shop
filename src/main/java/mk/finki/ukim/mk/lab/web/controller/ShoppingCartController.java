@@ -34,8 +34,15 @@ public class ShoppingCartController {
         }
         String username = req.getRemoteUser();
         ShoppingCart cart = this.shoppingCartService.getActiveShoppingCart(username);
+        String clientAddress = (String) req.getSession().getAttribute("clientAddress");
+        req.getSession().setAttribute("clientAddress", clientAddress);
+        String productName = req.getParameter("productName");
+        req.getSession().setAttribute("productName", productName);
+        String size = req.getParameter("payment");
+        req.getSession().setAttribute("payment", size);
         model.addAttribute("orders", this.shoppingCartService.listAllOrdersInShoppingCart(cart.getId()));
-        return "shopping-cart";
+        model.addAttribute("bodyContent", "shopping-cart");
+        return "master-template";
     }
 
     @PostMapping("/add-order/{id}")
@@ -46,6 +53,13 @@ public class ShoppingCartController {
         } catch (RuntimeException ex){
             return "redirect:/shopping-cart?error=" + ex.getMessage();
         }
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteFromShoppingCart(@PathVariable Long id, HttpServletRequest req){
+        String username = req.getRemoteUser();
+        this.shoppingCartService.deleteOrderFromShoppingCart(username, id);
+        return "redirect:/shopping-cart";
     }
 }
 

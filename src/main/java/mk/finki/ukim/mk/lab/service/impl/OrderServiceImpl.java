@@ -4,6 +4,7 @@ import mk.finki.ukim.mk.lab.model.Order;
 import mk.finki.ukim.mk.lab.model.User;
 import mk.finki.ukim.mk.lab.repository.OrderRepository;
 import mk.finki.ukim.mk.lab.service.OrderService;
+import mk.finki.ukim.mk.lab.service.ShoppingCartService;
 import mk.finki.ukim.mk.lab.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order placeOrder(String balloonColor, String balloonSize, User user) {
+    public Order placeOrder(String productName, String payment, User user) {
         Order order = new Order();
-        order.setBalloonColor(balloonColor);
-        order.setBalloonSize(balloonSize);
+        order.setProductName(productName);
+        order.setPayment(payment);
         user = this.userService.save(user);
         order.setUser(user);
         return this.orderRepository.save(order);
@@ -45,5 +46,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> listOrdersByUsername(String username) {
         return this.orderRepository.findAllByUserName(username);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        this.orderRepository.deleteById(id);
     }
 }

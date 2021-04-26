@@ -1,13 +1,10 @@
 <div lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <section class="jumbotron text-center">
         <div class="container">
-            <h1 class="jumbotron-heading">CHOOSE YOUR BALLOON</h1>
+            <h1 class="jumbotron-heading">Order confirmation</h1>
         </div>
     </section>
     <section>
-        <header>
-            <h1>Balloon Order page - Order confirmation </h1>
-        </header>
         <table>
             <tr>
                 <th colspan="2">
@@ -23,20 +20,12 @@
                 <td th:text="${#session.getAttribute('clientAddress')}"></td>
             </tr>
             <tr>
-                <td><b>Client IP Address</b></td>
-                <td th:text="${ip}"></td>
+                <td><b>Product Name</b></td>
+                <td th:text="${#session.getAttribute('productName')}"></td>
             </tr>
             <tr>
-                <td><b>Client Browser</b></td>
-                <td th:text="${browser}"></td>
-            </tr>
-            <tr>
-                <td><b>Balloon Color </b></td>
-                <td th:text="${#session.getAttribute('color')}"></td>
-            </tr>
-            <tr>
-                <td><b>Balloon Size </b></td>
-                <td th:text="${#session.getAttribute('size')}"></td>
+                <td><b>Payment Type</b></td>
+                <td th:text="${#session.getAttribute('payment')}"></td>
             </tr>
         </table>
         <a href="/orders">Go to orders</a>

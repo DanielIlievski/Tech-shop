@@ -27,5 +27,9 @@ public class Manufacturer {
     private String address;
 
     @OneToMany(mappedBy = "manufacturer")
-    private List<Balloon> balloons;
+    private List<Product> products;
+
+    public Manufacturer(String name) {
+        this.name = name;
+    }
 }

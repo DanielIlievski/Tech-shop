@@ -15,8 +15,10 @@ public class ConfirmationInfoController {
 
     @GetMapping
     public String show(HttpServletRequest req, Model model) {
-        model.addAttribute("ip", req.getRemoteAddr());
-        model.addAttribute("browser", req.getHeader("User-Agent"));
+        String clientAddress = (String) req.getSession().getAttribute("clientAddress");
+        req.getSession().setAttribute("clientAddress", clientAddress);
+        String clientName = (String) req.getSession().getAttribute("username");
+        req.getSession().setAttribute("username", clientName);
         model.addAttribute("bodyContent", "confirmationInfo");
         return "master-template";
     }
@@ -24,6 +26,6 @@ public class ConfirmationInfoController {
     @PostMapping
     public String invalidate(HttpServletRequest req) {
         req.getSession().invalidate();
-        return "redirect:/balloons";
+        return "redirect:/products";
     }
 }
